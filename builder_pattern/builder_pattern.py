@@ -1,3 +1,4 @@
+""" 以三角形的例子为例，初步认识建造者模式 """
 
 class SanJaoXinBuilder:
     C = None  # 周长
