@@ -1,6 +1,6 @@
 """抽象工厂模式"""
 
-from abc import ABCMeta,abstractmethod
+from abc import ABCMeta, abstractmethod
 
 
 # =========== 抽象产品 =============
@@ -124,6 +124,7 @@ class HuaWeiFactory(PhoneFactory):
     def make_os(self):
         return HongMengOs()
 
+
 class OppoFactory(PhoneFactory):
     def make_shell(self):
         return OppoShell()
@@ -133,6 +134,7 @@ class OppoFactory(PhoneFactory):
 
     def make_os(self):
         return AndroidOs()
+
 
 class AppleFactory(PhoneFactory):
     def make_shell(self):
@@ -147,7 +149,7 @@ class AppleFactory(PhoneFactory):
 
 # 客户端的手机类
 class Phone:
-    def __init__(self, shell:PhoneShell, os:Os, cpu:CPU):
+    def __init__(self, shell: PhoneShell, os: Os, cpu: CPU):
         self.shell = shell
         self.os = os
         self.cpu = cpu
@@ -158,9 +160,11 @@ class Phone:
         self.os.show_os()
         self.cpu.show_cpu()
 
+
 # 定义一个制作手机的类
-def make_phone(pf:PhoneFactory):
+def make_phone(pf: PhoneFactory):
     return Phone(pf.make_shell(), pf.make_os(), pf.make_cpu())
+
 
 if __name__ == "__main__":
     phone = make_phone(HuaWeiFactory())
@@ -174,4 +178,3 @@ if __name__ == "__main__":
     phone = make_phone(OppoFactory())
     phone.show_info()
     print("=====+++=====")
-
