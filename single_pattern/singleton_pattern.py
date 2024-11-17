@@ -1,4 +1,3 @@
-
 class Singleton:
     _instance = None
 
@@ -6,6 +5,7 @@ class Singleton:
         if cls._instance is None:
             cls._instance = super(Singleton, cls).__new__(cls)
         return cls._instance
+
 
 class Numer(Singleton):
     def __init__(self, n):
@@ -18,13 +18,15 @@ class Numer(Singleton):
 class Connection:
     pass
 
+
 class DatabasePool(Singleton):
     connections = []
     user_li = []
-    def __init__(self, name:str, pwd:str):
+
+    def __init__(self, name: str, pwd: str):
         self.name = name
         self.pwd = pwd
-        self.user_li.append({"name":name, "pwd":pwd})
+        self.user_li.append({"name": name, "pwd": pwd})
 
     def create_connection(self):
         self.connections.append(Connection())
@@ -33,6 +35,7 @@ class DatabasePool(Singleton):
 
 class Logger(Singleton):
     pass
+
 
 if __name__ == "__main__":
     a = Numer(10)
@@ -55,7 +58,6 @@ if __name__ == "__main__":
 
     print("u1 user_name:{}".format(u1.name))
     print("u2 user_name:{}".format(u2.name))
-
 
     print("u1 user_li:{}".format(u1.user_li))
     print("u2 user_li:{}".format(u2.user_li))
