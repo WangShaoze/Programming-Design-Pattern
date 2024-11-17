@@ -29,6 +29,14 @@ class PlayerBuilder(metaclass=ABCMeta):
     def build_leg(self):
         pass
 
+    @abstractmethod
+    def builder(self):
+        self.build_body()
+        self.build_face()
+        self.build_arm()
+        self.build_leg()
+        return self
+
 
 class Beauty(PlayerBuilder):
     def __init__(self):
@@ -45,6 +53,10 @@ class Beauty(PlayerBuilder):
 
     def build_leg(self):
         self.player.leg = "大长腿"
+
+    def builder(self):
+        super().builder()
+        return self.player
 
 
 class Monster(PlayerBuilder):
@@ -63,24 +75,15 @@ class Monster(PlayerBuilder):
     def build_leg(self):
         self.player.leg = "一瘸一拐的腿"
 
-
-class PlayerDirector:  # 控制玩家的组装顺序
-    def build_player(self, builder: PlayerBuilder):
-        builder.build_body()
-        builder.build_face()
-        builder.build_arm()
-        builder.build_leg()
-        return builder.player
+    def builder(self):
+        super().builder()
+        return self.player
 
 
 if __name__ == "__main__":
     # client
-    builder = Beauty()
-    directer = PlayerDirector()
-    p = directer.build_player(builder)
-    print(p)
+    beauty = Beauty().builder()
+    print(beauty)
 
-    builder = Monster()
-    directer = PlayerDirector()
-    p = directer.build_player(builder)
-    print(p)
+    monster = Monster().builder()
+    print(monster)
