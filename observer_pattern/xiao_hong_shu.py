@@ -11,14 +11,14 @@ class Observer(metaclass=ABCMeta):  # 抽象观察者
         pass
 
 
-class Notice:  # 消息制造者类
+class Notice:
     def __init__(self):
         self.observers: List[Observer] = []  # 所有加入到通知群
 
-    def follow(self, obs:Observer):
+    def follow(self, obs):
         self.observers.append(obs)  # 点关注
 
-    def unfollow(self, obs:Observer):
+    def unfollow(self, obs):
         self.observers.remove(obs)  # 点取关
 
     def notify(self):
@@ -26,42 +26,32 @@ class Notice:  # 消息制造者类
             obs.update(self)
 
 
-class BoZhu(Notice):  # 博主  具体的消息制造者
+class Role(Observer, Notice):
     def __init__(self):
         super().__init__()
         self.__info = None
 
-    @property
-    def info(self):
-        return self.__info
-
-    @info.setter
-    def info(self, msg):
+    def create_note(self, msg):
         self.__info = msg
         self.notify()
 
-
-class Fans(Observer):  # 具体观察者
-    def __init__(self):
-        self.__info = None
-
-    def update(self, notice):
-        self.__info = notice.info
+    def update(self, role):
+        self.__info = role.get_message()
 
     def get_message(self):
         return self.__info
 
 
 if __name__ == "__main__":
-    f1 = Fans()
-    f2 = Fans()
-    f3 = Fans()
+    f1 = Role()
+    f2 = Role()
+    f3 = Role()
 
-    bo_zhu = BoZhu()
+    bo_zhu = Role()
     bo_zhu.follow(f1)
     bo_zhu.follow(f2)
 
-    bo_zhu.info = "这是我发布的第一个作品"
+    bo_zhu.create_note("这是我发布的第一个作品")
 
     print(f1.get_message())
     print(f2.get_message())
@@ -70,7 +60,7 @@ if __name__ == "__main__":
     bo_zhu.unfollow(f1)
     bo_zhu.follow(f2)
     bo_zhu.follow(f3)
-    bo_zhu.info = "这是我发布的第二个作品"
+    bo_zhu.create_note("这是我发布的第二个作品")
 
     print(f1.get_message())
     print(f2.get_message())
