@@ -6,7 +6,8 @@ from .json_file_read import *
 
 class FileProcesser:
     """  文件处理类 """
-    def __init__(self, file_path:str):
+
+    def __init__(self, file_path: str):
         self.file_path = file_path
         self.file_name = None
         self.file_type = None
@@ -17,8 +18,7 @@ class FileProcesser:
         if "\\" in self.file_path:
             tmp = self.file_path.split("\\")[-1]
         self.file_type = tmp.split(".")[1]
-        self.file_name  = tmp.split(".")[0]
-
+        self.file_name = tmp.split(".")[0]
 
     def read_data(self):
         if self.file_type == "xlsx":
